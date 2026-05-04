@@ -1,5 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "name": "jh-20260503-prediction",
   "installCommand": "npm install",
   "buildCommand": "npm run vercel-build"
 }
