@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { api } from "../api";
 import { useAuth } from "../auth";
+import ProbabilityLineChart from "../components/ProbabilityLineChart";
 
 type BetRow = {
   id: string;
@@ -131,6 +132,7 @@ export default function MarketDetailPage() {
             {o.no_stake_total} SC
             {o.resolved_value && ` · resolved: ${o.resolved_value}`}
           </p>
+          <ProbabilityLineChart bets={o.bets} />
           {market.is_open && !market.is_resolved && !o.resolved_value && (
             <div className="row-actions" style={{ marginTop: "0.5rem" }}>
               <input

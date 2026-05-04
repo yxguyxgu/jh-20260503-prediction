@@ -12,7 +12,7 @@ import AdminPage from "./pages/AdminPage";
 function NavBar() {
   const { user, logout } = useAuth();
   return (
-    <nav>
+    <nav className="top-nav">
       <Link to="/">Home</Link>
       {user && (
         <>
@@ -25,7 +25,7 @@ function NavBar() {
       <span className="spacer" />
       {user ? (
         <>
-          <span className="muted">
+          <span className="muted top-nav-muted">
             {user.username} — {user.balance} SC
           </span>
           <button type="button" onClick={logout}>
@@ -84,8 +84,12 @@ export default function App() {
   return (
     <AuthProvider>
       <Bootstrap />
-      <div className="layout">
-        <NavBar />
+      <header className="top-bar">
+        <div className="layout top-bar-inner">
+          <NavBar />
+        </div>
+      </header>
+      <div className="layout page-body">
         <Routes>
           <Route path="/" element={<HomeRedirect />} />
           <Route path="/login" element={<LoginPage />} />

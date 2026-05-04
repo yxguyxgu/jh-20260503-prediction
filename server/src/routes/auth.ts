@@ -99,7 +99,10 @@ router.post("/login", async (req, res) => {
     }
 
     const bonus = await applyDailyBonus(user.id);
-    const fresh = await prisma.user.findUniqueOrThrow({ where: { id: user.id } });
+    const fresh = await prisma.user.findUniqueOrThrow({
+      where: { id: user.id },
+      select: { id: true, username: true, balance: true, is_admin: true },
+    });
 
     const token = signToken({
       sub: fresh.id,

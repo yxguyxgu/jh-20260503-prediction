@@ -199,7 +199,7 @@ export default function AdminPage() {
                     Confirm resolve
                   </button>
                   <button type="button" onClick={() => setResolveMarketId(null)}>
-                    Cancel
+                    Back
                   </button>
                 </>
               ) : (
