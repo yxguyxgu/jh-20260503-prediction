@@ -1,17 +1,19 @@
 {
   "name": "prediction-monorepo",
   "private": true,
+  "type": "module",
   "workspaces": [
     "client",
     "server"
   ],
   "scripts": {
-    "vercel-build": "prisma migrate deploy --schema=server/prisma/schema.prisma && prisma generate --schema=server/prisma/schema.prisma && npm run build --workspace=prediction-market-client"
+    "vercel-build": "prisma generate --schema=server/prisma/schema.prisma && prisma migrate deploy --schema=server/prisma/schema.prisma && npm run build --workspace=prediction-market-client"
   },
   "devDependencies": {
     "prisma": "^6.8.2"
   },
   "dependencies": {
-    "@prisma/client": "^6.19.3"
+    "@prisma/client": "^6.19.3",
+    "prediction-market-server": "workspace:*"
   }
 }

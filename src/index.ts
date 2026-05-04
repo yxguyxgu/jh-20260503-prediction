@@ -1,4 +1,4 @@
 import "dotenv/config";
-import { createApp } from "../server/src/app.js";
+import { createApp } from "prediction-market-server/app";
 
 export default createApp();
