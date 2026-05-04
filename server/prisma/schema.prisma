@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String    @id @default(uuid())
+  username           String    @unique
+  password_hash      String
+  balance            Int       @default(1000)
+  is_admin           Boolean   @default(false)
+  last_daily_bonus   DateTime?
+  created_at         DateTime  @default(now())
+  markets            Market[]
+  comments           Comment[]
+  bets               Bet[]
+}
+
+model Market {
+  id          String         @id @default(uuid())
+  title       String
+  description String
+  creator_id  String
+  is_open     Boolean        @default(true)
+  is_resolved Boolean        @default(false)
+  created_at  DateTime       @default(now())
+  creator     User           @relation(fields: [creator_id], references: [id], onDelete: Cascade)
+  options     MarketOption[]
+  comments    Comment[]
+}
+
+model MarketOption {
+  id              String   @id @default(uuid())
+  market_id       String
+  question_text   String
+  resolved_value  String? // "YES" | "NO" | null
+  market          Market   @relation(fields: [market_id], references: [id], onDelete: Cascade)
+  bets            Bet[]
+}
+
+model Bet {
+  id               String       @id @default(uuid())
+  user_id          String
+  market_option_id String
+  amount           Int
+  bet_on           String // "YES" | "NO"
+  created_at       DateTime     @default(now())
+  user             User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  market_option    MarketOption @relation(fields: [market_option_id], references: [id], onDelete: Cascade)
+}
+
+model Comment {
+  id         String   @id @default(uuid())
+  user_id    String
+  market_id  String
+  content    String
+  created_at DateTime @default(now())
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  market     Market   @relation(fields: [market_id], references: [id], onDelete: Cascade)
+}
